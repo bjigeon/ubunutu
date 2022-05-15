@@ -266,8 +266,6 @@ int main(int argc, char **argv) {
 
         case 5:
 
-            printf("BUFSIZ = %d\n", BUFSIZ);
-
             if (argc == 1)
             {
                 strcpy(directoryname, ".");
