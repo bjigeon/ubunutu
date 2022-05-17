@@ -70,7 +70,6 @@ void addFileContents()
 
         if( an == 'y'|| an == 'Y' )
         {
-
             fp = fopen(filename,"w");
 
             printf("덮어 쓸 파일 내용을 입력하세요\n");
@@ -305,8 +304,6 @@ int main(int argc, char **argv) {
         printf("파일 모드 번호를 입력하세요.\n");
         scanf(" %d",&num);
 
-        printf("num = %d\n",num);
-
         switch (num)
         {
         case 0:
@@ -371,6 +368,7 @@ int main(int argc, char **argv) {
             break;
 
         default:
+            system("clear");
             printf("다시 입력하세요.\n");
             break;
         }
