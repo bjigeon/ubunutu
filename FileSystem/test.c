@@ -37,11 +37,19 @@ void printdir(char *dir, int depth)
 
 int main()
 {
-    char a[200] = "casd";
-    // if (a == "casd")
+    // char mod = "777";
+    // int tmp;
+    // char result[10];
+
+    // for (int j = 0; j < 3; j++)
     // {
-    //     printf("dasdasd");
+    //    mod[j] = (int)mod[j];
+    //     for (int i = 4; i >= 0; --i) { //8자리 숫자까지 나타냄
+    //         tmp = mod[j] >> i & 1;
+    //     }
+    //     strcat(result,tmp);
     // }
-    printf("%s",a);
-    
+    // printf("%s",result);
+
+    chmod("asd.txt", 511);
 }

@@ -28,10 +28,15 @@ void createFile()
 	char filename[100];
 
 	printf("파일 이름을 입력하시오(파일 만들기): ");
-
 	scanf("%s", filename);
 
     strcat(filename,".txt");
+
+    if( (fp = fopen(filename, "r")) != NULL ) {
+		printf("원본 파일 %s가 이미 존재합니다\n", filename);
+        printf("파일 생성 모드를 종료합니다\n");
+        return;
+    }
 
     fopen(filename,"w+");
 
@@ -55,22 +60,8 @@ void addFileContents()
 
     if( (fp = fopen(filename, "r")) == NULL ) {
 		printf("원본 파일 %s을 열 수 없습니다.\n", filename);
-
-        printf("파일을 만드시겠습니까? Y/N  ");
-        scanf(" %c", &an);
-
-        if( an == 'y'|| an == 'Y' )
-        {
-            fp = fopen(filename,"w");
-            printf("파일을 만들었습니다. ");
-            printf("파일 내용 추가하기 모드를 종료 합니다.\n");
-        }
-        else
-        {
-            printf("파일 내용 추가하기 모드를 종료 합니다.\n");
-            exit(0);
-        }
-
+        printf("파일 내용 추가하기 모드를 종료 합니다.\n");
+        return;
 	}
     else
     {
@@ -102,10 +93,6 @@ void addFileContents()
             printf("파일 내용 추가가 완료되었습니다. 파일 내용 추가 모드를 종료합니다.\n");
             fclose(fp);
         }
-        else
-        {
-            exit(0);
-        }
     }
 }
 
@@ -124,19 +111,25 @@ void readFile()
 
 	if( (fp = fopen(filename, "r")) == NULL ) {
 		printf("원본 파일 %s을 열 수 없습니다.\n", filename);
+        fclose(fp);
 
         printf("파일 읽기 모드를 종료 합니다.\n");
+        return;
 	}
     else
     {
-        char buffer[20];
+        char buffer[2000];
 
         fp = fopen(filename, "r");
-        fgets(buffer, sizeof(buffer), fp); 
 
         printf("\n파일의 내용\n");
-        printf("%s\n", buffer);
 
+        while (feof(fp) == 0)
+        {
+            fgets(buffer,2000,fp);
+            printf("%s",buffer);
+        }
+        
         printf("\n파일 읽기 모드를 종료 합니다.\n");
         fclose(fp);
     }
@@ -155,6 +148,12 @@ void  deleteFile()
 
     strcat(filename,".txt");
 
+    if( (fp = fopen(filename, "r")) == NULL ) {
+		printf("원본 파일 %s을 열 수 없습니다.\n", filename);
+        printf("파일 삭제 모드를 종료합니다\n");
+        return;
+    }
+
     int result = remove( filename );
 
 	if( result == 0 )
@@ -165,7 +164,64 @@ void  deleteFile()
 	{
 		printf( "파일 삭제 실패하였습니다. 파일 삭제 모드를 종료 합니다.\n");
 	}
+}
 
+void chmode(){
+    system("clear");
+
+    FILE *fp = NULL;
+	char filename[100];
+    char mod[10];
+    char *end;
+
+    printf("권한을 변경할 파일 이름을 입력하시오(파일 권한변경): ");
+	scanf("%s", filename);
+
+    strcat(filename,".txt");
+
+    if( (fp = fopen(filename, "r")) == NULL ) {
+		printf("원본 파일 %s을 열 수 없습니다.\n", filename);
+        printf("파일 권한 변경 모드를 종료합니다\n");
+        return;
+    }
+    else
+    {
+        printf("파일 권한을 입력하시오 : ");
+        scanf("%s", mod);
+
+        chmod(filename, strtol(mod,(char **)NULL, 8));
+        printf("파일 권한을 변경하였습니다.\n");
+
+        printf("파일 권한변경 모드를 종료합니다\n");
+    }
+}   
+
+void mkdi(){
+    system("clear");
+
+	char filename[100];
+    
+    printf("만들 폴더 이름을 입력하세요(폴더 만들기): ");
+	scanf("%s", filename);
+
+    mkdir(filename,0777);
+
+    printf("폴더를 만들었습니다.\n");
+    printf("폴더 만들기 모드를 종료 합니다.\n");
+}
+
+void rmdi(){
+    system("clear");
+
+    char filename[100];
+    
+    printf("삭제할 폴더 이름을 입력하세요(폴더 삭제하기): ");
+	scanf("%s", filename);
+
+    rmdir(filename);
+
+    printf("폴더를 삭제하였습니다.\n");
+    printf("폴더 삭제 모드를 종료 합니다.\n");
 }
 
 struct aa
@@ -236,18 +292,26 @@ int main(int argc, char **argv) {
     while (1)
     {
         int num;
-        printf("\n종료를 원하면 6번\n");
+        printf("\n종료를 원하면 0번\n");
         printf("1. 파일 만들기 & 파일 덮어쓰기\n");
         printf("2. 파일 내용 추가하기\n");
         printf("3. 파일 내용 보기\n");
         printf("4. 파일 삭제\n");
-        printf("5. 디렉토리 보기\n\n");
+        printf("5. 디렉토리 보기\n");
+        printf("6. 파일 권한 변경\n");
+        printf("7. 폴더 생성\n");
+        printf("8. 폴더 삭제\n");
 
         printf("파일 모드 번호를 입력하세요.\n");
-        scanf("%d",&num);
+        scanf(" %d",&num);
+
+        printf("num = %d\n",num);
 
         switch (num)
         {
+        case 0:
+            return 0;
+
         case 1:
             createFile();
             break;
@@ -295,7 +359,16 @@ int main(int argc, char **argv) {
             break;
 
         case 6:
-            return 0;
+            chmode();
+            break;
+
+        case 7:
+            mkdi();
+            break;
+
+        case 8:
+            rmdi();
+            break;
 
         default:
             printf("다시 입력하세요.\n");
