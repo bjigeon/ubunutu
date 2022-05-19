@@ -8,6 +8,8 @@
 //gcc main.c -o main  
 // ./main   실행
 
+#define _CRT_NONSTDC_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -50,10 +52,11 @@ void addFileContents()
 	char filename[100];
     char contents[1000];
     char an;
+    char key;
 
     FILE *fp = NULL;
 	printf("파일 이름을 입력하시오(내용 추가): ");
-
+    
 	scanf("%s", filename);
 
     strcat(filename,".txt");
@@ -72,22 +75,52 @@ void addFileContents()
         {
             fp = fopen(filename,"w");
 
-            printf("덮어 쓸 파일 내용을 입력하세요\n");
-            scanf("%s",contents);
+            printf("덮어 쓸 파일 내용을 입력하세요\n:wq를 입력하면 종료\n");
+            while (1)
+            {
+                char contents[1000] = {0,};
+                scanf(" %[^\n]",contents);
 
-            fputs(contents, fp);
-
+                getchar();
+                if (contents[0] == ':' && contents[1] == 'w' && contents[2] == 'q')
+                {
+                    break;
+                }
+                else
+                {
+                    fputs(contents, fp);
+                    fputs("\n",fp);
+                }
+                
+            }
+            
             printf("파일 내용 덮어쓰기가 완료되었습니다. 파일 내용 덮어쓰기 모드를 종료합니다.\n");
             fclose(fp);
         }
         else if(an == 'n' || an == 'N')
         {
             fp = fopen(filename,"a");
+            lseek(fp,-2,SEEK_END);
 
-            printf("추가 할 파일 내용을 입력하세요\n");
-            scanf("%s",contents);
+            printf("덮어 쓸 파일 내용을 입력하세요\n:wq를 입력하면 종료\n");
 
-            fputs(contents, fp);
+            while (1)
+            {
+                char contents[1000] = {0,};
+                scanf(" %[^\n]",contents);
+
+                getchar();
+                if (contents[0] == ':' && contents[1] == 'w' && contents[2] == 'q')
+                {
+                    break;
+                }
+                else
+                {
+                    fputs(contents, fp);
+                    fputs("\n",fp);
+                }
+                
+            };
 
             printf("파일 내용 추가가 완료되었습니다. 파일 내용 추가 모드를 종료합니다.\n");
             fclose(fp);
@@ -327,6 +360,7 @@ int main(int argc, char **argv) {
 
         case 5:
 
+            system("clear");
             if (argc == 1)
             {
                 strcpy(directoryname, ".");
