@@ -1,1 +1,1 @@
-# linuxstudy
+# linux 수업 내용을 보관하는 저장소

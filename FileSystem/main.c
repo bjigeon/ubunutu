@@ -41,7 +41,7 @@ void createFile()
     }
 
     fopen(filename,"w+");
-
+    fclose(filename);
     printf("파일을 만들었습니다.\n파일 생성 모드를 종료합니다.\n\n");
 }
 
