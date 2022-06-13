@@ -1,0 +1,7 @@
+  PID TTY           TIME CMD
+ 1099 ttys001    0:00.01 /bin/zsh -l
+ 1137 ttys003    0:00.04 /bin/zsh -l
+ 1139 ttys004    0:00.01 /bin/zsh -l
+ 4534 ttys005    0:00.07 /bin/zsh -l
+66689 ttys006    0:00.02 /bin/zsh -l
+ 8578 ttys007    0:00.10 /bin/zsh -l

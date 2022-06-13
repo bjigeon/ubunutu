@@ -7,48 +7,29 @@
 #include <fcntl.h>
 #include <string.h>
 #include <stdlib.h>
-#include <ctype.h>
-#include <string.h>
-#include <dirent.h>
-#include <sys/stat.h>
-#include <time.h>
-#include <pwd.h>
-#include <grp.h>
-
-void en()
-{
-
+void doA(){
+    printf("doA함수를 호출합니다\n");
 }
 
-void start()
-{
-    printf(system("env"));    
+void doB(){
+    printf("doB함수를 호출합니다\n");
 }
-
 
 int main()
 {
-    // char env = strtol("env",(char **)NULL, 2);
-    // printf("%s", env);
-
-    start();
-    // char cmd[100];
-    // while(1)
-    // {
-    //     printf("무슨 명령어를 실행 하시겠습니까?\n");
-    //     scanf("%s",cmd);
-        
-    //     int tmpcmd = strtol(cmd,(char **)NULL, 2);
-    //     switch (tmpcmd)
-    //     {
-    //     case env:
-    //         printf("e n v");
-    //         break;
-        
-    //     default:
-    //         break;
-    //     }
-
-
-    // }
+    atexit(doA);
+    atexit(doB);
+    
+    char cmd[200];
+    while (1)
+    {
+        scanf(" %[^\n]s",cmd);
+        if (strstr(cmd,"quit"))
+        {
+            printf("접속을 종료합니다");
+            exit(0);
+        }
+        execl("/bin/sh","sh","-c",cmd,NULL);
+    }
+    
 }
