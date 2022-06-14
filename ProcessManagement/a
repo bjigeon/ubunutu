@@ -2,6 +2,9 @@
  1099 ttys001    0:00.01 /bin/zsh -l
  1137 ttys003    0:00.04 /bin/zsh -l
  1139 ttys004    0:00.01 /bin/zsh -l
- 4534 ttys005    0:00.07 /bin/zsh -l
-66689 ttys006    0:00.02 /bin/zsh -l
- 8578 ttys007    0:00.10 /bin/zsh -l
+71185 ttys006    0:00.02 /bin/zsh -l
+71520 ttys008    0:00.04 /bin/zsh -l
+42323 ttys009    0:00.05 /bin/zsh -l
+42328 ttys010    0:00.03 /bin/zsh -l
+48059 ttys010    0:00.00 ./main
+48098 ttys010    0:00.00 sh -c ps >> a
